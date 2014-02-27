@@ -35,7 +35,6 @@ require 'open-uri'
 gem 'json'
 gem 'seed_dump'
 gem 'gmaps4rails'
-gem 'whenever', :require => false
 
 gem 'anjlab-bootstrap-rails', :require => 'bootstrap-rails',
                               :github => 'anjlab/bootstrap-rails'
