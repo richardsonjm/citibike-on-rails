@@ -1,5 +1,8 @@
 ##README
 
+####Start Application
+foreman start -f Procfile.development
+
 
 ####Data Structure:
 stations

@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.1'
 gem 'pg'
-
+gem 'foreman'
 # Use sqlite3 as the database for Active Record
 # gem 'pg', group: :production
 
@@ -35,6 +35,12 @@ require 'open-uri'
 gem 'json'
 gem 'seed_dump'
 gem 'gmaps4rails'
+
+#Background jobs
+gem 'sidekiq'
+gem 'sidetiq'
+gem 'sinatra', require: false
+gem 'slim'
 
 gem 'anjlab-bootstrap-rails', :require => 'bootstrap-rails',
                               :github => 'anjlab/bootstrap-rails'
