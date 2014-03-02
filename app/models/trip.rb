@@ -2,7 +2,6 @@ class Trip < ActiveRecord::Base
   belongs_to :origin
   belongs_to :destination
 
-
   CITI_JSON = URI.parse('http://citibikenyc.com/stations/json')
 
   def start_time(seconds = 5.minutes)
@@ -17,7 +16,6 @@ class Trip < ActiveRecord::Base
   def destination_stations
     Station.near([self.destination.latitude, self.destination.longitude], 100).limit(5)
   end
-
 
   def origin_bike_status
     json = CITI_JSON.read
@@ -52,9 +50,8 @@ class Trip < ActiveRecord::Base
   end
 
   def rollback(roll_days, roll_minutes)
-       start_time - roll_days.days + roll_minutes.minutes
+    start_time - roll_days.days + roll_minutes.minutes
   end
-
 
   def multi_rollback(weeks, bump, min)
     n=0
@@ -62,12 +59,12 @@ class Trip < ActiveRecord::Base
     days = 7
     while n < weeks
       if n != weeks-1
-        cmd="\'#{rollback(bump + days, min).to_s[0..-7].gsub(' ','T').concat('+00:00')}\',"
+        cmd="\'#{rollback(bump + days, min)}\',"
         string << cmd
         n+=1
         days+=7
       else
-        cmd="\'#{rollback(bump + days, min).to_s[0..-7].gsub(' ','T').concat('+00:00')}\'"
+        cmd="\'#{rollback(bump + days, min)}\'"
         string << cmd
         n+=1
       end
@@ -79,10 +76,10 @@ class Trip < ActiveRecord::Base
     origin_stations.collect do |station| 
       # cmd= "SELECT * FROM station_#{station.station_id} WHERE station_time IN (\'#{rollback(70, min).to_s[0..18]}\', \'#{rollback(77, min).to_s[0..18]}\')"
       # connection.execute(cmd).field_values("bikes").join
-      cmd = "SELECT AVG(bikes) FROM station_#{station.station_id} WHERE station_time IN (#{multi_rollback(12, 63, min)})"
-      # connection.execute(cmd).field_values("avg").join.to_i
-      hash = connection.execute(cmd)[0]
-      hash["AVG(bikes)"].to_i
+      cmd = "SELECT AVG(bikes) FROM station_#{station.station_id} WHERE station_time IN (#{multi_rollback(12, 120, min)})"
+      connection.execute(cmd).field_values("avg").join.to_i
+      # hash = connection.execute(cmd)[0]
+      # hash["AVG(bikes)"].to_i
     end
   end
 
@@ -90,10 +87,10 @@ class Trip < ActiveRecord::Base
     destination_stations.collect do |station| 
       # cmd= "SELECT * FROM station_#{station.station_id} WHERE station_time = \'#{rollback(70,min).to_s[0..18]}\'"
       # connection.execute(cmd).field_values("free").join
-      cmd = "SELECT AVG(free) FROM station_#{station.station_id} WHERE station_time IN (#{multi_rollback(12, 63, min)})"
-      # connection.execute(cmd).field_values("avg").join.to_i
-      hash = connection.execute(cmd)[0]
-      hash["AVG(free)"].to_i
+      cmd = "SELECT AVG(free) FROM station_#{station.station_id} WHERE station_time IN (#{multi_rollback(12, 120, min)})"
+      connection.execute(cmd).field_values("avg").join.to_i
+      # hash = connection.execute(cmd)[0]
+      # hash["AVG(free)"].to_i
     end
   end 
 
