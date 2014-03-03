@@ -1,5 +1,5 @@
-# Procfile for development
+# Procfile for production
 web: bundle exec unicorn -p $PORT -c ./config/unicorn.rb
 redis: redis-server
 worker: bundle exec sidekiq
-log: tail -f -n 0 log/development.log
+

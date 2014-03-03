@@ -1,12 +1,11 @@
 source 'https://rubygems.org'
+ruby '1.9.3'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.1'
 gem 'pg'
-gem 'foreman'
-# Use sqlite3 as the database for Active Record
-# gem 'pg', group: :production
 
+#manage application startup
+gem 'foreman'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -29,7 +28,7 @@ gem 'jquery-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
-
+#Geocoding & API parsing 
 gem 'geocoder'
 require 'open-uri'
 gem 'json'
@@ -42,6 +41,7 @@ gem 'sidetiq'
 gem 'sinatra', require: false
 gem 'slim'
 
+#Styling
 gem 'anjlab-bootstrap-rails', :require => 'bootstrap-rails',
                               :github => 'anjlab/bootstrap-rails'
 
@@ -50,11 +50,13 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+gem 'rails_12factor', group: :production
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 
 # Use unicorn as the app server
-# gem 'unicorn'
+gem 'unicorn'
 
 # Use Capistrano for deployment
 gem 'capistrano',  '2.15.5', group: :development
